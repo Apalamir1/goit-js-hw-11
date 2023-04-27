@@ -1,8 +1,8 @@
 export function getRefs() {
 
     return {
-        searchField: document.querySelector('#search-box'),
-        countryList: document.querySelector('.country-list'),
-        countryInfo: document.querySelector('.country-info'),
+        searchField: document.querySelector('#search-form'),
+        getGallery: document.querySelector('.gallery'),
+        searchBtn: document.querySelector("#button-submit"),
     };
 };
