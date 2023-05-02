@@ -55,46 +55,41 @@ function onClickMoreBtn() {
     fetchAll();
 }
 
-function fetchAll() {
-    
-    newApiService.fetchArticles()
-        .then(data => {
-            const totalPage = Math.ceil(data.totalHits / 40);
+async function fetchAll() {
+    try {
+        const data = await newApiService.fetchArticles();
+        const totalPage = Math.ceil(data.totalHits / 40);
 
-            loadMoreBtn.show();
-            loadMoreBtn.disable();
-            
-            if (data.totalHits > 0) {
-                
-                loadMoreBtn.enable();
-                runMarkup(data.hits);
-                lightbox.refresh(); 
-            }
-            
-            if (data.totalHits === 0) {
+        loadMoreBtn.show();
+        loadMoreBtn.disable();
 
-                loadMoreBtn.hide();
-                noImagesFoundMessage();
-            }
-
-            if (newApiService.page === 2 && data.totalHits !== 0) {
-
-                imagesFoundMessage(data.totalHits);
-            }
-
-            if (data.totalHits < 40) {
-                
-                loadMoreBtn.hide();
-            }
-
-            if (totalPage < newApiService.page && newApiService.page > 2) {
-                loadMoreBtn.hide();
-                endOfSearchMessage();
+        if (data.totalHits > 0) {
+            loadMoreBtn.enable();
+            runMarkup(data.hits);
+            lightbox.refresh();
         }
-            
-    });
-}
 
+        if (data.totalHits === 0) {
+            loadMoreBtn.hide();
+            noImagesFoundMessage();
+        }
+
+        if (newApiService.page === 2 && data.totalHits !== 0) {
+            imagesFoundMessage(data.totalHits);
+        }
+
+        if (data.totalHits < 40) {
+            loadMoreBtn.hide();
+        }
+
+        if (totalPage < newApiService.page && newApiService.page > 2) {
+            loadMoreBtn.hide();
+            endOfSearchMessage();
+        }
+    } catch (error) {
+        
+    }
+}
 function runMarkup(c) {
     refs.getGallery.insertAdjacentHTML('beforeend', createMarkup(c));
 }

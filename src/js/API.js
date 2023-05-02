@@ -18,7 +18,7 @@ export default class NewApi {
         };
     }
     async fetchArticles() {
-
+        
         try {
             const urlAXIOS = `?page=${this.page}&q=${this.query}`;
             const { data } = await axios.get(urlAXIOS, this.params);
